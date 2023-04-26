@@ -5,9 +5,10 @@ class BidirectionalLinksGenerator < Jekyll::Generator
     graph_edges = []
 
     all_notes = site.collections['notes'].docs
-    all_pages = site.pages
+    all_papers = site.collections['papers'].docs
+    # all_pages = site.pages
 
-    all_docs = all_notes + all_pages
+    all_docs = all_notes + all_papers
 
     link_extension = !!site.config["use_html_extension"] ? '.html' : ''
 
@@ -74,27 +75,32 @@ class BidirectionalLinksGenerator < Jekyll::Generator
     end
 
     # Identify note backlinks and add them to each note
-    all_notes.each do |current_note|
+    all_docs.each do |current_doc|
       # Nodes: Jekyll
-      notes_linking_to_current_note = all_notes.filter do |e|
-        e.content.include?(current_note.url)
+      notes_linking_to_current_doc = all_notes.filter do |e|
+        e.content.include?(current_doc.url)
+      end
+      papers_linking_to_current_doc = all_papers.filter do |e|
+        e.content.include?(current_doc.url)
       end
 
       # Nodes: Graph
       graph_nodes << {
-        id: note_id_from_note(current_note),
-        path: "#{site.baseurl}#{current_note.url}#{link_extension}",
-        label: current_note.data['title'],
-      } unless current_note.path.include?('_notes/index.html')
+        id: doc_id_from_doc(current_doc),
+        doc_type: current_doc.data['collection'],
+        path: "#{site.baseurl}#{current_doc.data['collection']}#{current_doc.url}#{link_extension}",
+        label: current_doc.data['title'], # todo: shorten label for papers?
+      } unless current_doc.path.include?('_notes/index.html')
 
       # Edges: Jekyll
-      current_note.data['backlinks'] = notes_linking_to_current_note
+      current_doc.data['backlinks_notes'] = notes_linking_to_current_doc
+      current_doc.data['backlinks_papers'] = papers_linking_to_current_doc
 
       # Edges: Graph
-      notes_linking_to_current_note.each do |n|
+      notes_linking_to_current_doc.each do |n|
         graph_edges << {
-          source: note_id_from_note(n),
-          target: note_id_from_note(current_note),
+          source: doc_id_from_doc(n),
+          target: doc_id_from_doc(current_doc),
         }
       end
     end
@@ -105,7 +111,7 @@ class BidirectionalLinksGenerator < Jekyll::Generator
     }))
   end
 
-  def note_id_from_note(note)
-    note.data['title'].bytes.join
+  def doc_id_from_doc(doc)
+    doc.data['title'].bytes.join
   end
 end

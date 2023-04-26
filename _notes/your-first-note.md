@@ -64,6 +64,8 @@ Some behavior is configurable by tweaking the `_config.yml` file.
 
 Notice in the "Notes mentioning this note" section that there is another note linking to this note. This is a bi-directional link, and those are automatically created when you create links to other notes.
 
+Same for papers, like [[testPaper2023]].
+
 ### Link previews
 
 If you're on a device with mouse support, try hovering your mouse on internal links to preview the notes: [[a note about cats]].

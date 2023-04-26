@@ -32,7 +32,10 @@ sass:
 collections:
   notes:
     output: true
-    permalink: /:slug
+    permalink: /notes/:slug
+  papers:
+    output: true
+    permalink: /papers/:slug
 
 defaults:
   - scope:
@@ -43,3 +46,7 @@ defaults:
       path: "_notes/**/*.md"
     values:
       layout: "note"
+  - scope:
+      path: "_papers/**/*.md"
+    values:
+      layout: "paper"

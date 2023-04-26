@@ -26,6 +26,16 @@ The easiest way to get started is to read this [step-by-step guide explaining ho
   {% endfor %}
 </ul>
 
+<strong>Recently added papers</strong>
+<ul>
+  {% assign recent_papers = site.papers | sort: "last_modified_at_timestamp" | reverse %}
+  {% for paper in recent_papers limit: 5 %}
+    <li>
+      {{ paper.last_modified_at | date: "%Y-%m-%d" }} — <a class="internal-link" href="{{ paper.url }}">{{ paper.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
 <style>
   .wrapper {
     max-width: 46em;
