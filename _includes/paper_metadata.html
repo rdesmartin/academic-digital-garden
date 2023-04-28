@@ -1,0 +1,60 @@
+<div>
+<p class="paper-metadata">
+    {% for author in page.authors %}
+    {{author}}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    <br>
+    {% if page.doi %} <a href="https://doi.org/{{ page.doi }}">[doi]</a> {% endif %}
+    {% if page.eprint %} <a href="https://arxiv.org/abs/{{ page.eprint }}">[arXiv]</a> {% endif %}
+    {% if page.isbn %} <a href="http://books.google.com/books?vid=ISBN{{ page.isbn }}">[ISBN]</a> {% endif %}
+    <a href="https://scholar.google.com/scholar?q={{ page.title | cgi_escape }}">[Google Scholar]</a>
+    <a href="https://dblp.org/search?q={{ page.title | cgi_escape }}">[DBLP]</a>
+    <a href="https://citeseer.ist.psu.edu/search?q={{ page.title | cgi_escape }}">[Citeseer]</a>
+    {% if page.link %} <a href="{{ page.link }}">[url]</a> {% endif %}
+    {% if page.readings.size != 0 %}
+    <br>Read:
+    {% for date in page.readings %}
+    {{ date | date_to_long_string }}
+    {% endfor %}
+    {% endif %}
+<br>
+</p>
+<p class="paper-metadata">
+        {% if page.ENTRYTYPE == "phdthesis" %}
+        Ph.D. thesis<br>
+        {% elsif page.ENTRYTYPE == "mastersthesis" %}
+        Masters thesis<br>
+        {% elsif page.ENTRYTYPE == "manual" %}
+        Manual<br>
+        {% elsif page.ENTRYTYPE == "techreport" %}
+        Report<br>
+        {% endif %}
+        {% if page.booktitle %}
+        {{ page.booktitle }}
+        <br>
+        {% if page.series %} {{ page.series }}{% if page.volume %}, volume {{ page.volume }} {% endif %} <br>
+        {% elsif page.volume %} Volume {{ page.volume }} {% if page.series %}, series {{ page.series }} {% endif %} <br>
+        {% endif %}
+        {% elsif page.journal %}
+        {{ page.journal }}
+        {{ page.volume }}{% if page.number %}({{ page.number }}){% endif %}<br>
+        {% elsif page.number %}
+        {{ page.number }}<br>
+        {% elsif page.note %}
+        {{ page.note }}<br>
+        {% endif %}
+        {% if page.eprint %}
+        {{ page.archiveprefix }} {{ page.eprint }} {{ page.primaryclass }}<br>
+        {% endif %}
+        {% if page.school and page.school != "" %} {{ page.school }}<br> {% endif %}
+        {% if page.institution and page.institution != "" %} {{ page.institution }}<br> {% endif %}
+        {% if page.organization and page.organization != "" %} {{ page.organization }}<br> {% endif %}
+        {% if page.location and page.location != "" %} {{ page.location }}<br> {% endif %}
+        {% if page.publisher and page.publisher != "" %} {{ page.publisher }}<br> {% endif %}
+        {% if page.address and page.address != "" %} {{ page.address }}<br> {% endif %}
+        {% if page.pages and page.pages != "" %} Pages {{ page.pages }}<br> {% endif %}
+        {{ page.day }}
+        {{ page.month }}
+        {{ page.year }}
+</p>
+</div>

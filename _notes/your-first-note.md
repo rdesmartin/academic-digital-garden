@@ -1,5 +1,5 @@
 ---
-title: Your first seed
+title: Your first note
 ---
 
 ### Welcome!
@@ -31,6 +31,17 @@ Of course, you can also link to external websites, like this: [this is a link to
 
 [^1]: This is a footnote. For more information about using footnotes, check out the [Markdown Guide](https://www.markdownguide.org/extended-syntax/#footnotes).
 [^2]: This is another footnote that links to the note about [[cats]]. You may also point to [[notes that do not exist]] if you wish.
+
+### Papers
+
+Papers notes are automatically generated in the `_papers` directory when the site is generated from a `.bib` file. The name of each paper's file is the BibTeX entry's key. Existing papers are not re-generated.
+
+The location and name of the `.bib` file can be edited in `_config.yml`:
+```yml
+papers:
+  bib_dir: "_bibliography"
+  bib_file: "references.bib"
+```
 
 ### Tweet embedding
 
@@ -64,7 +75,7 @@ Some behavior is configurable by tweaking the `_config.yml` file.
 
 Notice in the "Notes mentioning this note" section that there is another note linking to this note. This is a bi-directional link, and those are automatically created when you create links to other notes.
 
-Same for papers, like [[testPaper2023]].
+The same applies for papers, you check out [[vaswaniAttentionIsAllYouNeed2017|this one]] for instance.
 
 ### Link previews
 
